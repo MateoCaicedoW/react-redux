@@ -4,7 +4,7 @@ import { deleteTask, completeTask } from '../features/tasks/taskSlice.js'
 import { Link } from "react-router-dom"
 function Card({ task }) {
 
-    const classStatus = task.status === true ? "text-green-500" : "text-red-500"
+    const classStatus = task.completed === true ? "text-green-500" : "text-red-500"
 
     const dispatch = useDispatch()
 
@@ -22,7 +22,7 @@ function Card({ task }) {
                 <h1 className="text-xl font-bold">{task.title}</h1>
                 <p>{task.description}</p>
                 <p className={classStatus}>{
-                        task.status === true ? "Completed" : "Pending"
+                        task.completed === true ? "Completed" : "Pending"
                 }</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 ">
@@ -41,7 +41,7 @@ function Card({ task }) {
                     }}
                     className="bg-green-500  px-2 py-1 rounded-md" />
                 
-                <Link to={`edit/${task.id}`} className="bg-slate-400  px-3 py-1 rounded-md">
+                <Link to={`edit/${task.id}`} className="bg-slate-400  text-center px-3 py-1 rounded-md">
                     Edit
                 </Link>
             </div>

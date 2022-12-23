@@ -1,4 +1,4 @@
-import { createSlice} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 import {tasks} from './../../db/data.js'
 export const taskSlice = createSlice({
     name: 'tasks',
@@ -7,32 +7,31 @@ export const taskSlice = createSlice({
         addTask: (state, action) => {
             return [...state, action.payload]
         },
+
         deleteTask: (state, action) => {
-            return state.filter(task => task.id !== action.payload)
+            const taskFound = state.find(task => task.id === action.payload)
+            if (taskFound) {
+                 state.splice(state.indexOf(taskFound), 1)
+            }
         },
+        editTask: (state, action) => {
+            const taskFound = state.find(task => task.id === action.payload.id)
+            if (taskFound) {
+                taskFound.title = action.payload.title
+                taskFound.description = action.payload.description
+                taskFound.completed = action.payload.completed
+            }
+        },
+        
         completeTask: (state, action) => {
-            state.map(task => {
-                if (task.id === action.payload) {
-                    return {
-                        ...task,
-                        completed: !task.completed
-                    }
-                }
-                return task
-            })
-            // return state.map(task => {
-            //     if (task.id === action.payload) {
-            //         return {
-            //             ...task,
-            //             completed: !task.completed
-            //         }
-            //     }
-            //     return task
-            // })
+            const taskFound = state.find(task => task.id === action.payload)
+            if (taskFound) {
+                taskFound.completed = !taskFound.completed
+            }
         }
     }
 })
 
-export const {addTask, deleteTask, completeTask} = taskSlice.actions
+export const {addTask, deleteTask, completeTask,editTask} = taskSlice.actions
 
 export default taskSlice.reducer

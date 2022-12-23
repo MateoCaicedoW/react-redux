@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react'
 import {Field } from './Field'
 import { Button } from './Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTask } from '../features/tasks/taskSlice.js'
+import { addTask,editTask } from '../features/tasks/taskSlice.js'
 import { v4 as uuidv4 } from 'uuid'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 
 
 function TaskForm() {
 
     const [task, setTask] = useState({
         title: '',
-        description: ''
+        description: '',
+        completed: false
     })
     
 
@@ -22,20 +23,24 @@ function TaskForm() {
 
 
     const tasks = useSelector((state) => state.tasks);
+
     useEffect(() => {
         if (params.id) {
-            tasks.map((task) => {
-                if (task.id === params.id) {
-                    setTask(task)
-                }  
-            })
-            // setTask(task)
+            const task = tasks.find((task) => task.id == params.id)
+            setTask(task)
         }
-    }, [])
+    }, [params.id, tasks])
 
 
     const submitForm = (e) => {
         e.preventDefault()
+
+        if (params.id) {
+            dispatch(editTask(task))
+            navigate('/')
+            return
+        }
+
         let newTask = {
             id: uuidv4(),
             title: task.title,
@@ -77,8 +82,11 @@ function TaskForm() {
                         }
                     } />
                 </div>
-
-                <Button name="Add Task" type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md" />
+                <div className='flex gap-3'>
+                    <Button name="Send" type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md" />
+                    <Link to="/" className="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</Link>
+                </div>
+                
             </form>
         </div>
     )
