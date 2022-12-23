@@ -10,7 +10,7 @@ function App() {
     <main className="container mx-auto p-8">
       <BrowserRouter>
       <Routes>
-        <Route path="/react-redux/tasks" element={<TaskList />} />
+        <Route path="/" element={<TaskList />} />
         <Route path="/add" element={ <TaskForm />} />
         <Route path="/edit/:id" element={<TaskForm />} />
       </Routes>
