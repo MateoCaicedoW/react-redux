@@ -20,6 +20,7 @@ function TaskList() {
 
             <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-5'>
                 {tasks.map((task) => {
+                    console.log(task);
                     return <Card task={task} key={task.id}/>
                 })}
             </div>
