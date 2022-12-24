@@ -1,4 +1,4 @@
-import { Button } from "./Button"
+import { Button } from "../Button"
 import { useDispatch } from "react-redux"
 // import { deleteTask, completeTask } from '../features/tasks/taskSlice.js'
 import { Link } from "react-router-dom"

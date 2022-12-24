@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import {Field } from './Field'
-import { Button } from './Button'
+import {Field } from '../Field'
+import { Button } from '../Button'
 import { useDispatch, useSelector } from 'react-redux'
-// import { addTask,editTask } from '../features/tasks/taskSlice.js'
+import { addTask, getTasks } from '../../features/tasks/taskSlice'
+import { createTasks } from '../../api/tasks' 
 import { v4 as uuidv4 } from 'uuid'
 import { useNavigate, useParams, Link } from 'react-router-dom'
+import { fetcher } from '../../api/fetcher'
 
 
 function TaskForm() {
@@ -12,7 +14,7 @@ function TaskForm() {
     const [task, setTask] = useState({
         title: '',
         description: '',
-        completed: false
+        status: false
     })
     
 
@@ -32,7 +34,7 @@ function TaskForm() {
     }, [params.id, tasks])
 
 
-    const submitForm = (e) => {
+    const  submitForm = async (e) => {
         e.preventDefault()
 
         if (params.id) {
@@ -42,18 +44,31 @@ function TaskForm() {
         }
 
         let newTask = {
-            id: uuidv4(),
             title: task.title,
             description: task.description,
-            completed: false,
+            status: false,
         }
+
+
         //dispatch is a function of the Redux store. You call store.dispatch to dispatch an action. This is the only way to trigger a state change.
         dispatch(addTask(newTask))
+
+        await createTasks(newTask).then((res) => {
+            console.log(res)
+        })
+
+
         setTask({
             title: '',
             description: ''
         })
+
+   
+        const tasks = await fetcher('tasks')
+        dispatch(getTasks(tasks))
+
         navigate('/')
+     
     }
 
 
