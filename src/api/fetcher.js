@@ -5,7 +5,8 @@ export async function fetcher(endPoint) {
     try {
         const response = await axios.get(`${baseUrl}${endPoint}`)
         if (response.status === 200) {
-            const data = response.data;
+            const data = response.data.data;
+            
             return data;
         }
         return response.data;

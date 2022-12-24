@@ -7,7 +7,7 @@ export async function createTasks(task){
             title: task.title,
             description: task.description,
             status: task.status,
-            user_id: 'a0563453-6cff-4993-b559-0b290cc39804'
+            user_id: task.user_id
         });
         if (response.status === 200) {
             const data = response.data;

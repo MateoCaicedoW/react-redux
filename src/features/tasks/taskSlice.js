@@ -5,6 +5,7 @@ export const taskSlice = createSlice({
     initialState: emptyTasks,
     reducers: {
         getTasks: (state, action) => {
+
             state = action.payload;
             return state;
         },

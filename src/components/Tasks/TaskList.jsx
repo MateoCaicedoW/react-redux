@@ -6,10 +6,11 @@ import { EmptyState } from "../EmptyState";
 function TaskList() {
     //useSelector is a hook that allows you to extract data from the Redux store state, using a selector function.
     const tasks = useSelector((state) => state.tasks);
+
     if (tasks.length === 0) {
         return (
             <div>
-                <EmptyState />
+                 <EmptyState description="Create a new task" link="/add" title="There's any task" />
             </div>
         )
     }

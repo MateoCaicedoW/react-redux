@@ -1,11 +1,17 @@
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
+import { EmptyState } from "../EmptyState"
 import { Card } from "./Card"
 
 
 export const UserList = () => {
 
     const users = useSelector((state) => state.users)
+
+    if (users.length === 0) {
+        return <EmptyState description="Create a new user" link="/users/add" title="There's any user" />
+        
+    }
 
     return(
         <div>

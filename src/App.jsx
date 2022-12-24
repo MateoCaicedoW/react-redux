@@ -19,6 +19,7 @@ function App() {
             <Route path="/edit/:id" element={<TaskForm />} />
             <Route path="/users" element={<UserList />} />
             <Route path="/users/add" element={<UserForm />} />
+            <Route path="/users/edit/:id" element={<UserForm />} />
             <Route path="*" element={<h1>404 Not Found</h1>} />
           </Routes>
         </Header>
