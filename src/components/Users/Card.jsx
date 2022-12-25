@@ -5,6 +5,7 @@ import { fetcher } from "../../api/fetcher"
 import { useDispatch } from "react-redux"
 import { getUsers } from "../../features/users/userSlice"
 import { getTasks } from "../../features/tasks/taskSlice"
+import { setForm } from "../../features/form"
 
 export const Card = ({user}) => {
 
@@ -44,7 +45,9 @@ export const Card = ({user}) => {
                     }}
                     className="bg-red-400 px-3 py-1 rounded-md " />
                 
-                <Link to={`/users/edit/${user.id}`} className="bg-slate-400  text-center px-3 py-1 rounded-md">
+                <Link to={`/users/edit/${user.id}`} onClick={()=>{
+                    dispatch(setForm({task: false, user: true}))
+                }} className="bg-slate-400  text-center px-3 py-1 rounded-md">
                     Edit
                 </Link>
             </div>

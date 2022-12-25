@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { fetcher } from '../api/fetcher';
 import {getTasks} from '../features/tasks/taskSlice'
 import {getUsers} from '../features/users/userSlice'
+import {setForm} from '../features/form'
 
 export const useInit = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export const useInit = () => {
         const users = await fetcher('users');
         dispatch(getUsers(users));
         dispatch(getTasks(tasks));
+        dispatch(setForm({task: false, user: false}))
     }
     
     useEffect(() => {

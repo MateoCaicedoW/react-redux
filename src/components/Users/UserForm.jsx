@@ -23,8 +23,9 @@ export const UserForm = () => {
     const navigate = useNavigate()
     const params = useParams()
 
-
+    const form = useSelector((state) => state.forms)
     const users = useSelector((state) => state.users);
+
     useEffect(() => {
         if (params.id) {
             const get = async () => {
@@ -85,7 +86,7 @@ export const UserForm = () => {
     return (
         <div className='max-w-2xl m-auto'>
             <form className="bg-slate-700 rounded-lg p-10 mb-5" onSubmit={handleSubmit}>
-                <h1 className="text-white text-2xl font-bold mb-3">Add User</h1>
+                <h1 className="text-white text-2xl font-bold mb-3">{form.user ? "Edit User":"Add User"}</h1>
                 <div className="grid  md:grid-cols-2 md:gap-5">
                     <Field label="FirstName" value={user.first_name} name="first_name" handleChange={
                         (e) =>{

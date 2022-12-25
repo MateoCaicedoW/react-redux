@@ -1,20 +1,37 @@
-import { Link } from "react-router-dom"
-import { useState } from "react";
+import { Link, useLocation } from "react-router-dom"
+import { useEffect, useState } from "react";
 export const Header = ({children}) => {
     const items = [
         {
             name: "Tasks",
-            path: "/"
+            path: "/",
+            subPath: {
+                add: "/add",
+                edit: "/edit"
+            }
         },
         {
             name: "Users",
-            path: "/users"
+            path: "/users",
+            subPath: {
+                add: "/users/add",
+                edit: "/users/edit"
+            }
+
         }
 
     ]
 
-    let [open,setOpen]=useState(false);
+    let [open,setOpen]= useState(false);
 
+    const [url, setUrl] = useState('/');
+    const location = useLocation();
+
+
+    useEffect(() => {
+        setUrl(location.pathname);
+    }, [location]);
+    
     return (
         <>
             <div className='shadow-md w-full fixed top-0 left-0'>
@@ -35,8 +52,8 @@ export const Header = ({children}) => {
                     {
                         items.map((link)=>(
                         <li key={link.name} className='md:ml-8 text-xl md:my-0 my-7'>
-
-                            <Link to={link.path} className='text-white hover:text-gray-400 duration-500'>{link.name}</Link>
+                            
+                            <Link to={link.path} className={`text-white hover:text-gray-400 duration-500 ${url === link.path ? "text-blue-300": "" }`  }>{link.name}</Link>
 
                         </li>
                         ))

@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import { Link } from  "react-router-dom";
 import { EmptyState } from "../EmptyState";
+import { setForm } from "../../features/form";
 
 function TaskList() {
     //useSelector is a hook that allows you to extract data from the Redux store state, using a selector function.
     const tasks = useSelector((state) => state.tasks);
-
+    const dispatch = useDispatch()
     if (tasks.length === 0) {
         return (
             <div>
@@ -18,7 +19,12 @@ function TaskList() {
     return (
         <div> 
 
-            <Link to="/add" className="bg-green-500 text-white px-4 py-2 rounded-md" >
+            <Link to="/add" onClick={()=>{
+                dispatch(setForm({
+                    task: false,
+                    user: false
+                }))
+            }} className="bg-green-500 text-white px-4 py-2 rounded-md" >
                 Add Task
             </Link>
 

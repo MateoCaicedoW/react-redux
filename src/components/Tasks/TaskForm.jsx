@@ -26,7 +26,7 @@ function TaskForm() {
     const navigate = useNavigate()
     const params = useParams()
 
-
+    const form = useSelector((state) => state.forms)
     const tasks = useSelector((state) => state.tasks);
     const users = useSelector((state) => state.users);
 
@@ -79,7 +79,7 @@ function TaskForm() {
     return (
         <div className='max-w-md m-auto'>
             <form onSubmit={submitForm} className="bg-slate-700 rounded-lg p-10 mb-5">
-                <h1 className="text-white text-2xl font-bold mb-3">Add Task</h1>
+                <h1 className="text-white text-2xl font-bold mb-3">{form.task ? 'Edit Task' : 'Add Task'}</h1>
                 <Field name="title" label="Title" value={task.title} handleChange={
                     (e) => {
                         setTask({

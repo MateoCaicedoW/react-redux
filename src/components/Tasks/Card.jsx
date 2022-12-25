@@ -2,6 +2,7 @@ import { Button } from "../Button"
 import { useDispatch } from "react-redux"
 // import { deleteTask, completeTask } from '../features/tasks/taskSlice.js'
 import { Link } from "react-router-dom"
+import { setForm } from "../../features/form"
 function Card({ task }) {
 
     const classStatus = task.status === true ? "text-green-500" : "text-red-500"
@@ -41,7 +42,9 @@ function Card({ task }) {
                     }}
                     className="bg-green-500  px-2 py-1 rounded-md" />
                 
-                <Link to={`edit/${task.id}`} className="bg-slate-400  text-center px-3 py-1 rounded-md">
+                <Link to={`edit/${task.id}`} onClick={()=>{
+                    dispatch(setForm({task: true, user: false}))
+                }} className="bg-slate-400  text-center px-3 py-1 rounded-md">
                     Edit
                 </Link>
             </div>
