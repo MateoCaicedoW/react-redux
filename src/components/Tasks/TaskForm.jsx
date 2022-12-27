@@ -3,7 +3,7 @@ import {Field } from '../Field'
 import { Button } from '../Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTask, getTasks } from '../../features/tasks/taskSlice'
-import { createTasks } from '../../api/tasks' 
+import { createTasks, getTask, updateTask } from '../../api/tasks' 
 import { v4 as uuidv4, NIL } from 'uuid'
 
 import { useNavigate, useParams, Link } from 'react-router-dom'
@@ -32,8 +32,12 @@ function TaskForm() {
 
     useEffect(() => {
         if (params.id) {
-            const task = tasks.find((task) => task.id == params.id)
-            setTask(task)
+            const get = async () => {
+                const task = await getTask(params.id)
+                setTask(task.data)
+                return
+            }
+            get()
         }
     }, [params.id, tasks])
 
@@ -42,7 +46,15 @@ function TaskForm() {
         e.preventDefault()
 
         if (params.id) {
-            // dispatch(editTask(task))
+            const res = await updateTask(task)
+            if (res.status !== 200) {
+                dispatch(setErrors(res.data))
+                return
+            }
+            dispatch(setErrors(emptyErrors))
+
+            const tasks = await fetcher('tasks')
+            dispatch(getTasks(tasks))
             navigate('/')
             return
         }

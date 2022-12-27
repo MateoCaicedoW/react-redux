@@ -1,21 +1,39 @@
 import { Button } from "../Button"
 import { useDispatch } from "react-redux"
 // import { deleteTask, completeTask } from '../features/tasks/taskSlice.js'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { setForm } from "../../features/form"
+import { completeTask, deleteTask } from "../../api/tasks"
+import { getTasks } from "../../features/tasks/taskSlice"
+import { fetcher } from "../../api/fetcher"
 function Card({ task }) {
 
     const classStatus = task.status === true ? "text-green-500" : "text-red-500"
-
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    // const handleDelete = (id) => {
-    //     dispatch(deleteTask(id))
-    // }
+    const handleDelete = async (id) => {
 
-    // const handleComplete = (id) => {
-    //     dispatch(completeTask(id))
-    // }
+        const res = await deleteTask(id)
+        if (res.status !== 200) {
+            return
+        }
+        const tasks = await fetcher("tasks")
+        dispatch(getTasks(tasks)) 
+        navigate("/")
+
+    }
+
+    const handleComplete = async (task) => {
+
+        const res = await completeTask(task)
+        if (res.status !== 200) {
+            return
+        }
+        const tasks = await fetcher("tasks")
+        dispatch(getTasks(tasks)) 
+       
+    }
 
     return (
         <div className="bg-slate-700 p-5 rounded-lg text-white">
@@ -31,14 +49,14 @@ function Card({ task }) {
                     name={"Delete"}
                     type="button"
                     handleClick={() => {
-                        // handleDelete(task.id)
+                        handleDelete(task.id)
                     }}
                     className="bg-red-400 px-5 py-1 rounded-md " />
                 <Button
                     name={"Complete"}
                     type="button"
                     handleClick={() => {
-                        // handleComplete(task.id)-
+                        handleComplete(task)
                     }}
                     className="bg-green-500  px-2 py-1 rounded-md" />
                 
