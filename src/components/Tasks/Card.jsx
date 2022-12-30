@@ -20,7 +20,7 @@ function Card({ task }) {
         }
         const tasks = await fetcher("tasks")
         dispatch(getTasks(tasks)) 
-        navigate("/")
+        navigate("/tasks")
 
     }
 

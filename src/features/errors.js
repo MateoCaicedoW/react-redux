@@ -5,6 +5,10 @@ export const emptyErrors = {
     first_name: [],
     last_name: [],
     password: [],
+    user_id: [],
+    description: [],
+    title: [],
+    
 };
 
 export const errorSlice = createSlice({

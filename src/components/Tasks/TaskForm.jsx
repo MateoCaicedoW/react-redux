@@ -9,6 +9,9 @@ import { v4 as uuidv4, NIL } from 'uuid'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { fetcher } from '../../api/fetcher'
 import { setErrors,emptyErrors } from '../../features/tasks/errorsTasks'
+import { TextArea } from '../TextArea'
+import { SelectInput } from '../SelectInput'
+import { Header } from '../Header'
 
 
 function TaskForm() {
@@ -46,6 +49,7 @@ function TaskForm() {
         e.preventDefault()
 
         if (params.id) {
+        
             const res = await updateTask(task)
             if (res.status !== 200) {
                 dispatch(setErrors(res.data))
@@ -55,7 +59,7 @@ function TaskForm() {
 
             const tasks = await fetcher('tasks')
             dispatch(getTasks(tasks))
-            navigate('/')
+            navigate('/tasks')
             return
         }
 
@@ -82,28 +86,28 @@ function TaskForm() {
         const tasks = await fetcher('tasks')
         dispatch(getTasks(tasks))
 
-        navigate('/')
+        navigate('/tasks')
      
     }
 
 
 
     return (
-        <div className='max-w-md m-auto'>
-            <form onSubmit={submitForm} className="bg-slate-700 rounded-lg p-10 mb-5">
-                <h1 className="text-white text-2xl font-bold mb-3">{form.task ? 'Edit Task' : 'Add Task'}</h1>
-                <Field name="title" label="Title" value={task.title} handleChange={
-                    (e) => {
-                        setTask({
-                            ...task,
-                            title: e.target.value
-                        })
+        <Header>
+            <div className='max-w-md m-auto'>
+                <form onSubmit={submitForm} className="bg-slate-700 rounded-lg p-10 mb-5">
+                    <h1 className="text-white text-2xl font-bold mb-3">{form.task ? 'Edit Task' : 'Add Task'}</h1>
+                    <Field name="title" label="Title" value={task.title} handleChange={
+                        (e) => {
+                            setTask({
+                                ...task,
+                                title: e.target.value
+                            })
 
-                    }
-                } />
-                <div className='flex flex-col mb-3'>
-                    <label className='text-white' htmlFor="description ">Description</label>
-                    <textarea name="description" value={task.description}  className='rounded-md px-2 resize-none' rows="5"  onChange={
+                        }
+                    } />
+
+                    <TextArea className="rounded-md px-2 resize-none" rows="5" label="Description" name="description" value={task.description}  handleChange={
                         (e) => {
                             setTask({
                                 ...task,
@@ -111,33 +115,22 @@ function TaskForm() {
                             }) 
                         }
                     } />
-                </div>
 
-                <div className='flex flex-col mb-6'>
-                    <label htmlFor="user" className="text-white">User</label>
-                    <select name="user" className='rounded-md p-2' value={task.user_id} onChange={
-                        (e) => {
-                            setTask({
-                                ...task,
-                                user_id: e.target.value
-                            })
-                        }
-                    }>
-                        <option value={NIL}>Select User</option>
-                        {
-                            users.map((user) => {
-                                return <option value={user.id} key={user.id}>{user.first_name}</option>
-                            })
-                        }
-                    </select>
-                </div>
-                <div className='flex gap-3'>
-                    <Button name="Send" type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md" />
-                    <Link to="/" className="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</Link>
-                </div>
+                    <SelectInput name="user_id" className="rounded-md p-2" value={task.user_id} label="User" options={users}  handleChange={(e) => {
+                                setTask({
+                                    ...task,
+                                    user_id: e.target.value
+                                })
+                            }} />
                 
-            </form>
-        </div>
+                    <div className='flex gap-3'>
+                        <Button name="Send" type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md" />
+                        <Link to="/tasks" className="bg-gray-500 text-white px-4 py-2 rounded-md">Cancel</Link>
+                    </div>
+                    
+                </form>
+            </div>
+        </Header>
     )
 }
 

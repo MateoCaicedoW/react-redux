@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'http://localhost:3000/tasks';
+const baseURL = 'https://todo-server-production-7d9c.up.railway.app/tasks';
 
 export async function createTasks(task){
     try {

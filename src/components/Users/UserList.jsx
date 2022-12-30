@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { setForm } from "../../features/form"
 import { EmptyState } from "../EmptyState"
+import { Header } from "../Header"
 import { Card } from "./Card"
 
 
@@ -15,7 +16,7 @@ export const UserList = () => {
     }
 
     return(
-        <div>
+        <Header>
             <Link to="/users/add" onClick={() =>{
                 dispatch(setForm({task: false , user: true}))
             }} className="bg-green-500 text-white px-4 py-2 rounded-md" >
@@ -26,7 +27,7 @@ export const UserList = () => {
                     return <Card key={user.id} user={user} />
                 })}
             </div>
-        </div>
+        </Header>
     )
 
 }

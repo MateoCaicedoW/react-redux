@@ -3,6 +3,7 @@ import Card from "./Card";
 import { Link } from  "react-router-dom";
 import { EmptyState } from "../EmptyState";
 import { setForm } from "../../features/form";
+import { Header } from "../Header";
 
 function TaskList() {
     //useSelector is a hook that allows you to extract data from the Redux store state, using a selector function.
@@ -17,9 +18,10 @@ function TaskList() {
     }
 
     return (
-        <div> 
+        
+        <Header> 
 
-            <Link to="/add" onClick={()=>{
+            <Link to="/tasks/add" onClick={()=>{
                 dispatch(setForm({
                     task: false,
                     user: false
@@ -33,7 +35,7 @@ function TaskList() {
                     return <Card task={task} key={task.id}/>
                 })}
             </div>
-        </div>
+        </Header>
     )
 }
 

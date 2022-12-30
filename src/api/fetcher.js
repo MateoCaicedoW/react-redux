@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/';
+const baseUrl = 'https://todo-server-production-7d9c.up.railway.app/';
 import axios from 'axios';
 
 export async function fetcher(endPoint) {

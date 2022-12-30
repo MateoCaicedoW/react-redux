@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = 'http://localhost:3000/users';
+const baseURL = 'https://todo-server-production-7d9c.up.railway.app/users';
 
 export const createUser  = async (user) => {
     try{

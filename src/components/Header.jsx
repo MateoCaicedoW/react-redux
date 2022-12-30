@@ -4,10 +4,10 @@ export const Header = ({children}) => {
     const items = [
         {
             name: "Tasks",
-            path: "/",
+            path: "/tasks",
             subPath: {
-                add: "/add",
-                edit: "/edit"
+                add: "/tasks/add",
+                edit: "/tasks/edit"
             }
         },
         {
